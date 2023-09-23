@@ -13,7 +13,14 @@ const PhotoGridItem = ({ id, src, alt, tags }) => {
             ${src.replace('.jpg', '@2x.avif')} 2x,
             ${src.replace('.jpg', '@3x.avif')} 3x`}
           />
-          <Image src={src} />
+          <source
+            type='image/jpeg'
+            srcset={`
+            ${src} 1x,
+            ${src.replace('.jpg', '@2x.jpg')} 2x,
+            ${src.replace('.jpg', '@3x.jpg')} 3x`}
+          />
+          <Image src={src} alt={alt} />
         </picture>
       </Anchor>
       <Tags>
@@ -41,17 +48,23 @@ const Image = styled.img`
 `;
 
 const Tags = styled.ul`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 4px 0;
 `;
 
 const Tag = styled.li`
+  display: inline;
   padding: 4px 8px;
   background: var(--color-gray-300);
   font-size: 0.875rem;
   font-weight: 475;
   color: var(--color-gray-800);
+
+  + li {
+    margin-left: 8px;
+  }
 `;
 
 export default PhotoGridItem;
